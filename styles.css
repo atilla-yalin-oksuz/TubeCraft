@@ -1,0 +1,217 @@
+/* =========================================================
+   TubeCraft for YouTube - Master Stylesheet (Pro Override)
+   Responsive, Safe, & Fully Customizable (CSS Vars)
+   ========================================================= */
+
+:root {
+  /* Defaults in case JS hasn't injected yet */
+  --tc-color-main: #cc0000;
+  --tc-color-start: #800000;
+  --tc-color-end: #ffcc00;
+  --tc-glass-bg: rgba(10, 10, 10, 0.65);
+  --tc-glass-border: rgba(255, 255, 255, 0.1);
+  --tc-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* =========================================================
+   1. CLEAN INTERFACE
+   ========================================================= */
+body.tc-clean-ui-active .ytp-gradient-bottom,
+body.tc-clean-ui-active .ytp-gradient-top {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* =========================================================
+   2. FLOATING GLASS BAR & MENU POSITION FIX
+   ========================================================= */
+body.tc-floating-bar-active .tubecraft-initialized .ytp-chrome-bottom {
+  /* Fix Right Shift by precisely managing width and box-sizing */
+  left: 12px !important;
+  width: calc(100% - 24px) !important;
+  box-sizing: border-box !important;
+  margin-bottom: 12px !important;
+  
+  background: var(--tc-glass-bg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--tc-glass-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  transition: opacity 0.25s, margin-bottom 0.3s ease !important;
+  /* Removed padding-bottom, we will lift controls directly */
+}
+
+body.tc-floating-bar-active .tubecraft-initialized .ytp-chrome-controls {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  position: relative !important;
+  transform: translateY(-4px) !important; /* Forcibly lifts the media buttons off the bottom edge to center them perfectly */
+}
+
+/* Fix chapter hovers so they don't overlap the floating bar */
+body.tc-floating-bar-active .tubecraft-initialized .ytp-tooltip,
+body.tc-floating-bar-active .tubecraft-initialized .ytp-chapter-hover-container {
+  margin-bottom: 25px !important; 
+}
+
+/* Fix Settings Menu Location & Glassmorphism */
+body.tc-floating-bar-active .tubecraft-initialized .ytp-popup {
+  margin-bottom: 25px !important; /* Fixes the menu appearing too low */
+  background: rgba(15, 15, 15, 0.85) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1px solid var(--tc-color-main) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.8) !important;
+}
+
+/* =========================================================
+   3. ENHANCED PROGRESS BAR (Custom Colors)
+   ========================================================= */
+body.tc-progress-bar-active .tubecraft-initialized .ytp-play-progress {
+  background: linear-gradient(90deg, var(--tc-color-start), var(--tc-color-main), var(--tc-color-end)) !important;
+  box-shadow: 0 0 15px var(--tc-color-start) !important;
+}
+
+body.tc-progress-bar-active .tubecraft-initialized .ytp-progress-bar-container,
+body.tc-progress-bar-active .tubecraft-initialized .ytp-progress-bar {
+  overflow: visible !important; /* Allow scrubber to glow outside the bar container */
+}
+
+body.tc-progress-bar-active .tubecraft-initialized .ytp-swatch-background-color {
+  background-color: var(--tc-color-main) !important;
+}
+
+body.tc-progress-bar-active .tubecraft-initialized .ytp-scrubber-button {
+  background: var(--tc-color-main) !important;
+  /* Use inset box shadow instead of border to prevent physical size changes */
+  box-shadow: inset 0 0 0 2px var(--tc-color-end), 0 0 10px var(--tc-color-end) !important;
+  border-radius: 50% !important;
+}
+
+body.tc-progress-bar-active .tubecraft-initialized .ytp-volume-slider-handle {
+  background: var(--tc-color-end) !important;
+  box-shadow: 0 0 15px var(--tc-color-end) !important;
+  opacity: 1 !important;
+}
+
+/* Force a powerful custom glow on the volume ball that doesn't break slide animations */
+body.tc-progress-bar-active .tubecraft-initialized .ytp-volume-slider-handle::after {
+  content: '' !important;
+  position: absolute !important;
+  top: -8px !important; left: -8px !important;
+  right: -8px !important; bottom: -8px !important;
+  background: var(--tc-color-end) !important;
+  border-radius: 50% !important;
+  filter: blur(6px) !important;
+  opacity: 0.8 !important;
+  z-index: -1 !important;
+}
+
+body.tc-progress-bar-active .tubecraft-initialized .ytp-volume-slider-handle::before {
+  background: var(--tc-color-end) !important;
+  opacity: 0.3 !important; /* Native YouTube ripple effect */
+}
+
+/* =========================================================
+   4. AMBIENT GLOW
+   ========================================================= */
+body.tc-ambient-glow-active .html5-video-player.tubecraft-initialized {
+  box-shadow: inset 0 0 120px var(--tc-color-start) !important;
+  transition: box-shadow 0.8s ease !important;
+}
+
+body.tc-ambient-glow-active .html5-video-player.tubecraft-initialized.playing-mode {
+  animation: tc-glow-pulse 4s infinite alternate !important;
+}
+
+@keyframes tc-glow-pulse {
+  0% { box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2) !important; }
+  100% { box-shadow: inset 0 0 180px var(--tc-color-main) !important; }
+}
+
+/* =========================================================
+   5. MENU & UI ANIMATIONS
+   ========================================================= */
+body.tc-animations-active .tubecraft-initialized .ytp-button {
+  transition: var(--tc-transition) !important;
+}
+
+body.tc-animations-active .tubecraft-initialized .ytp-button:hover {
+  transform: scale(1.15) !important;
+  filter: drop-shadow(0 0 8px var(--tc-color-end)) !important;
+}
+
+/* Glowing menu items */
+body.tc-animations-active .tubecraft-initialized .ytp-menuitem:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: inset 5px 0 0 var(--tc-color-main) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Fix Play button and side buttons glow clipping */
+body.tc-animations-active .tubecraft-initialized .ytp-chrome-controls,
+body.tc-animations-active .tubecraft-initialized .ytp-left-controls,
+body.tc-animations-active .tubecraft-initialized .ytp-right-controls {
+  overflow: visible !important;
+}
+
+/* Bouncy Settings Menu */
+body.tc-bouncy-menu-active .tubecraft-initialized .ytp-popup {
+  animation: tc-bouncy-slide 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+  transform-origin: bottom right !important;
+}
+
+@keyframes tc-bouncy-slide {
+  0% { transform: translateY(30px) scale(0.8); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+/* Pulsing Scrubber */
+body.tc-pulsing-scrubber-active .tubecraft-initialized.playing-mode .ytp-scrubber-button {
+  animation: tc-scrub-pulse 1.5s infinite alternate !important;
+}
+
+@keyframes tc-scrub-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 5px var(--tc-color-end) !important; }
+  100% { transform: scale(1.3); box-shadow: 0 0 20px var(--tc-color-main) !important; }
+}
+
+/* =========================================================
+   6. EXTRA UI ENHANCEMENTS (The 20 Settings)
+   ========================================================= */
+/* Hide Watermarks (Channel branding) */
+body.tc-hide-watermark-active .branding-context-container-inner { display: none !important; }
+
+/* Hide End Screen Cards */
+body.tc-hide-end-cards-active .ytp-ce-element { display: none !important; }
+
+/* Hide Autoplay Button */
+body.tc-hide-autoplay-active .ytp-autonav-toggle-button-container { display: none !important; }
+
+/* Hide Comments */
+body.tc-hide-comments-active ytd-comments { display: none !important; }
+
+/* Hide Related Videos */
+body.tc-hide-related-active #secondary-inner { display: none !important; }
+
+/* Hide YouTube Shorts */
+body.tc-hide-shorts-active ytd-rich-shelf-renderer[is-shorts] { display: none !important; }
+
+/* Hide Live Chat */
+body.tc-hide-chat-active #chat { display: none !important; }
+
+/* Hide Header */
+body.tc-hide-header-active ytd-masthead { display: none !important; }
+
+/* Always Show Control Bar */
+body.tc-always-show-bar-active .ytp-autohide .ytp-chrome-bottom { opacity: 1 !important; }
+
+/* Mini-Player Glass Effect */
+body.tc-mini-player-glass-active ytd-miniplayer {
+  background: var(--tc-glass-bg) !important;
+  backdrop-filter: blur(20px) !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--tc-glass-border) !important;
+}
